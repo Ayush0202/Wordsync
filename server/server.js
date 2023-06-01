@@ -6,6 +6,8 @@ const bodyParser = require('body-parser')
 
 const app = express()
 
+const documentRoute= require('./routes/documentRoute')
+
 dotenv.config()
 
 app.use(bodyParser.json({extended: true}))
@@ -18,9 +20,8 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASS
     .then(() => console.log('Database Connected'))
     .catch((err) => console.log(err))
 
-app.get('/', (req, res) => {
-    res.send('Hello from Server')
-})
+// document routes
+app.use('/docs', documentRoute)
 
 app.listen(5000 || process.env.PORT, () => {
     console.log('Server is running on port 5000')
