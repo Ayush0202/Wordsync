@@ -1,0 +1,13 @@
+.navbar-bottom{
+    background-color: #333842;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.navbar-bottom a{
+    text-decoration: none;
+}
+
+.footer-text{
+    color: white;
+}
