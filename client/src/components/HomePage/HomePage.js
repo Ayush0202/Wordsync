@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import './HomePage.css'
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
+import imageName from "../../images/wordsync2.JPG";
 const HomePage = () => {
 
     let imageName = require('../../images/wordsync2.JPG')
@@ -11,34 +12,16 @@ const HomePage = () => {
         <>
             <Header />
 
-            <div className="main-div" >
+            <div className=" wrapper container-fluid">
 
-                <div className="main-heading--div" >
-                    <h1 className="main-heading"><span style={{ color: '#623C3D' }} >Word</span><span style={{ color: '#6B645C' }} >sync</span></h1>
+                <div className="home home-page-text">
+                    <h1 className="main-page-heading">Web app for managing <br/>Documents!</h1>
+                    <h4 className="main-page-text">With a simple rich text editor <br/> made with quilljs</h4>
+                    <h5 className="main-page-text">Live collaboration is now a feature</h5>
                 </div>
 
-                <div className="main-content--div" >
-                    <div className="main-content-image--div" >
-                        <img src={imageName} height="300" width="450" alt="wordsync"  ></img>
-                    </div>
-
-                    <div className="headerDivider" ></div>
-
-                    <div className="main-content-content--div">
-
-                        <h1 className="heading-secondary-home" >Web app for managing documents!</h1>
-                        <h5>
-
-                            With a simple rich text editor made with quilljs! <br/>
-                            Manage documents easily without any hassle. <br />
-                            Live collaboration is now a feature!
-
-                        </h5>
-
-                        <Link to='/login'><button className="login-button--sm">Log In</button></Link>
-
-                    </div>
-
+                <div className="home home-page-image">
+                    <img src={imageName} alt="Gif File" />
                 </div>
 
             </div>

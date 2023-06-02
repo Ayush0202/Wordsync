@@ -1,4 +1,7 @@
-.navbar-main {
-    background-color: #49515f
+.navbar-heading-name {
+    color: whitesmoke !important;
 }
 
+.navbar-button {
+    color: #61dafb !important;
+}

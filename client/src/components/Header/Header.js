@@ -11,42 +11,42 @@ const Header = () => {
 
     return (
         <>
-            <Navbar className='navbar-main' expand="lg">
-                <Container>
-                    <Navbar.Brand className='navbar-heading' as={Link} to="/">Wordsync</Navbar.Brand>
-                        <Nav className="me-auto">
+            <Navbar className='navbar-color' variant='dark'>
+                <Container className='navbar-container'>
 
-                            {/* navbar of home page when user is not signed in */}
-                            {location.pathname === '/' && (
-                                <Nav>
-                                    <Nav.Link as={Link} to="/login">Login</Nav.Link>
-                                    <Nav.Link as={Link} to="/register">Register</Nav.Link>
-                                </Nav>
-                            )}
+                    <Navbar.Brand className='navbar-heading-name' as={Link} to="/">Wordsync</Navbar.Brand>
 
-                            {/* navbar of home page when user is signed in */}
-                            {location.pathname === '/' && (
-                                <Nav>
-                                    <NavDropdown title="User Name" id="basic-nav-dropdown">
-                                        <NavDropdown.Item as={Link} to="/">New Document</NavDropdown.Item>
-                                        <NavDropdown.Item as={Link} to="/docs/dashboard"> Your Documents </NavDropdown.Item>
-                                        <NavDropdown.Item as={Link} to="/"> Logout </NavDropdown.Item>
-                                    </NavDropdown>
-                                </Nav>
-                            )}
-
-                            {/* navbar at other routes */}
-                            {location.pathname === '/docs/dashboard' && (
-                                <Nav>
-                                    <NavDropdown title="User Name" id="basic-nav-dropdown">
-                                        <NavDropdown.Item as={Link} to="/">New Document</NavDropdown.Item>
-                                        <NavDropdown.Item as={Link} to="/">Logout</NavDropdown.Item>
-                                    </NavDropdown>
-                                </Nav>
-                            )}
-
-
+                    {/* navbar of home page when user is not logged in */}
+                    {location.pathname === '/' && (
+                        <Nav className="d-flex navbar-button">
+                            <Nav.Link as={Link} to="/register">Register</Nav.Link>
+                            <Nav.Link as={Link} to="/login">Login</Nav.Link>
                         </Nav>
+                    )}
+
+                    {/* navbar of home page when user is logged in */}
+                    {/*{location.pathname === '/' && (*/}
+                    {/*    <Nav className="d-flex">*/}
+                    {/*            <NavDropdown title='user name' id="basic-nav-dropdown">*/}
+                    {/*            <NavDropdown.Item as={Link} to="/docs/dashboard">New Document</NavDropdown.Item>*/}
+                    {/*            <NavDropdown.Item as={Link} to="/docs/dashboard">Your Documents</NavDropdown.Item>*/}
+                    {/*            <NavDropdown.Item as={Link} to="/docs/dashboard">Delete Account</NavDropdown.Item>*/}
+                    {/*            <NavDropdown.Item as={Link} to="/docs/dashboard" >Log Out</NavDropdown.Item>*/}
+                    {/*        </NavDropdown>*/}
+                    {/*    </Nav>*/}
+                    {/*)}*/}
+
+                    {/* navbar of dashboard page */}
+                    {location.pathname === '/docs/dashboard' && (
+                        <Nav className="d-flex">
+                            <NavDropdown title='user name' id="basic-nav-dropdown">
+                                <NavDropdown.Item as={Link} to="/docs/dashboard">New Codeshare</NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/docs/dashboard">Delete Account</NavDropdown.Item>
+                                <NavDropdown.Item as={Link} >Log Out</NavDropdown.Item>
+                            </NavDropdown>
+                        </Nav>
+                    )}
+
                 </Container>
             </Navbar>
 
