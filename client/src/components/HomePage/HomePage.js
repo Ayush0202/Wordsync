@@ -1,9 +1,7 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
 import './HomePage.css'
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
-import imageName from "../../images/wordsync2.JPG";
 const HomePage = () => {
 
     let imageName = require('../../images/wordsync2.JPG')
