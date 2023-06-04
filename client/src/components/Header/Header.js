@@ -28,7 +28,7 @@ const Header = () => {
                     {/*{location.pathname === '/' && (*/}
                     {/*    <Nav className="d-flex">*/}
                     {/*            <NavDropdown title='user name' id="basic-nav-dropdown">*/}
-                    {/*            <NavDropdown.Item as={Link} to="/docs/dashboard">New Document</NavDropdown.Item>*/}
+                    {/*            <NavDropdown.Item as={Link} to="/docs/new">New Document</NavDropdown.Item>*/}
                     {/*            <NavDropdown.Item as={Link} to="/docs/dashboard">Your Documents</NavDropdown.Item>*/}
                     {/*            <NavDropdown.Item as={Link} to="/docs/dashboard">Delete Account</NavDropdown.Item>*/}
                     {/*            <NavDropdown.Item as={Link} to="/docs/dashboard" >Log Out</NavDropdown.Item>*/}
@@ -40,7 +40,7 @@ const Header = () => {
                     {location.pathname === '/docs/dashboard' && (
                         <Nav className="d-flex">
                             <NavDropdown title='user name' id="basic-nav-dropdown">
-                                <NavDropdown.Item as={Link} to="/docs/dashboard">New Document</NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/docs/new">New Document</NavDropdown.Item>
                                 <NavDropdown.Item as={Link} to="/docs/dashboard">Delete Account</NavDropdown.Item>
                                 <NavDropdown.Item as={Link} >Log Out</NavDropdown.Item>
                             </NavDropdown>
