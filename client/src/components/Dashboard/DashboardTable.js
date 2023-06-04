@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { Link } from 'react-router-dom'
 
 import { Table, TableHead, TableBody, TableCell, TableRow, styled, Button} from "@mui/material";
 
@@ -62,7 +63,9 @@ const DashboardTable = () => {
                         documents.map((document) => (
                             <TBody key={document._id}>
                                 <TableCell>
-                                    Hello
+                                    <Link to={`/docs/${document._id}`} style={{ textDecoration: 'none' }}>
+                                        {document._id}
+                                    </Link>
                                 </TableCell>
                                 <TableCell>{new Date(document.createdAt).toLocaleDateString('en-GB')}</TableCell>
                                 <TableCell>{new Date(document.createdAt).toLocaleTimeString()}</TableCell>

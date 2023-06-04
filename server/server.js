@@ -11,6 +11,7 @@ dotenv.config()
 
 const PORT = 5000 || process.env.PORT
 
+const documentController = require('./controller/documentController')
 const documentRoute= require('./routes/documentRoute')
 
 app.use(bodyParser.json({extended: true}))
@@ -40,11 +41,11 @@ const io = new Server(server, {
 io.on('connection', (socket) => {
 
     // making changes on a particular document only
-    socket.on('get-document', documentId => {
+    socket.on('get-document', async documentId => {
 
-        const data = ""
+        const document = await documentController.getDocument(documentId)
         socket.join(documentId)
-        socket.emit('load-document', data)
+        socket.emit('load-document', document.data)
 
         // getting changes from frontend
         socket.on('send-changes', delta => {
@@ -52,9 +53,10 @@ io.on('connection', (socket) => {
             // backend to frontend
             socket.broadcast.to(documentId).emit('receive-changes', delta)
         })
+
+        // updating document
+        socket.on('save-document', async data => {
+            await documentController.updateDocument(documentId, data)
+        })
     })
-
-
-
-
 })
