@@ -39,12 +39,22 @@ const io = new Server(server, {
 
 io.on('connection', (socket) => {
 
-    // getting changes from frontend
-    socket.on('send-changes', delta => {
-        // sending data received to all users
-        // backend to frontend
-        socket.broadcast.emit('receive-changes', delta)
+    // making changes on a particular document only
+    socket.on('get-document', documentId => {
+
+        const data = ""
+        socket.join(documentId)
+        socket.emit('load-document', data)
+
+        // getting changes from frontend
+        socket.on('send-changes', delta => {
+            // sending data received to all users
+            // backend to frontend
+            socket.broadcast.to(documentId).emit('receive-changes', delta)
+        })
     })
+
+
 
 
 })

@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from 'react'
+import {io} from 'socket.io-client'
+import {useParams} from "react-router-dom";
+
 import Quill from 'quill'
+import 'quill/dist/quill.snow.css'
 
 import {Box} from '@mui/material'
 import styled from '@emotion/styled'
-import 'quill/dist/quill.snow.css'
+
 import './Editor.css'
 import Header from "../Header/Header";
-
-import {io} from 'socket.io-client'
 
 const Component = styled.div`
   background: #F5F5F5;
@@ -38,6 +40,7 @@ const Editor = () => {
 
     const [socket, setSocket] = useState()
     const [quill, setQuill] = useState()
+    const { id } = useParams()
 
 
     // rendering the editor component
@@ -46,6 +49,9 @@ const Editor = () => {
             theme: 'snow',
             modules: {toolbar: toolbarOptions}
         })
+        // document is disabled till the time it is loaded
+        quillServer.disable()
+        quillServer.setText('Loading the document...')
         setQuill((quillServer))
     }, [])
 
@@ -100,6 +106,23 @@ const Editor = () => {
         }
 
     }, [quill, socket])
+
+
+    // handling changes in a specific document
+    useEffect(() => {
+        if(quill === null || socket === null)   return
+
+        // enabling document when it is available
+        socket && socket.once('load-document', document => {
+            quill && quill.setContents(document)
+            quill && quill.enable()
+        })
+
+        socket && socket.emit('get-document', id)
+
+
+
+    }, [quill, socket, id])
 
 
 
