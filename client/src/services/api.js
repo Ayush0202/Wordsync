@@ -2,6 +2,18 @@ import axios from 'axios'
 
 const URL = 'http://localhost:5000'
 
+
+// register new user
+export const registerUser = async (data) => {
+    try{
+        const response = await axios.post(`${URL}/register`, data)
+        return response.data
+    }
+    catch (e) {
+        throw e.response.data
+    }
+}
+
 // getting documents to dashboard
 export const getAllDocuments = async () => {
     try {

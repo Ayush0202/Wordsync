@@ -13,6 +13,7 @@ const PORT = 5000 || process.env.PORT
 
 const documentController = require('./controller/documentController')
 const documentRoute= require('./routes/documentRoute')
+const authRoute = require('./routes/authRoute')
 
 app.use(bodyParser.json({extended: true}))
 app.use(bodyParser.urlencoded({extended: true}))
@@ -26,6 +27,9 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASS
 
 // document routes
 app.use('/docs', documentRoute)
+
+// auth routes
+app.use('/', authRoute)
 
 const server = app.listen(PORT, () => {
     console.log(`Server is running on ${PORT}`)

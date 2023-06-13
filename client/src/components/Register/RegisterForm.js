@@ -1,6 +1,11 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+// react
+import React, {useState} from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
+// api
+import {registerUser} from '../../services/api'
+
+// material ui
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -11,13 +16,89 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+
+
+// default values of form
+const defaultValues = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: ''
+}
 
 const RegisterForm = () => {
 
     const defaultTheme = createTheme();
 
+    // navigating
+    const navigate = useNavigate()
+
+    // adding data to form
+    const [user, setUser] = useState(defaultValues)
+
+    // setting error messages
+    const [errorMessage, setErrorMessage] = useState('')
+
+    // handling form changes
+    const onValueChange = (e) => {
+        //console.log(e.target.name, e.target.value);
+        setUser({ ...user, [e.target.name] : e.target.value })
+        //console.log(user)
+    }
+
+    // handling changes to form
+    const handleSubmit = async (e) => {
+        // preventing form default changes
+        e.preventDefault()
+
+        try {
+            const response = await registerUser(user)
+            console.log(response)
+            setUser(defaultValues)
+            navigate('/docs/dashboard')
+        }
+        catch (e) {
+            console.log(e.message)
+
+            // custom validation messages
+
+            if(e.message === 'All fields must be filled') {
+                setErrorMessage('All fields must be filled')
+            }
+
+            if(e.message === 'User already exists') {
+                setErrorMessage('User already exists')
+            }
+
+            if(e.message === 'Invalid email') {
+                setErrorMessage('Invalid Email')
+            }
+
+            if(e.message === 'Password to small') {
+                setErrorMessage('Password to small')
+            }
+        }
+    }
+
+    // closing alert
+    const handleAlertClose = () => {
+        setErrorMessage('')
+    }
+
     return (
         <>
+
+            {/* alert message */}
+            {errorMessage && (
+                <Alert severity="error" onClose={handleAlertClose} >
+                    <AlertTitle>Error</AlertTitle>
+                    {errorMessage}
+                </Alert>
+            )}
+
+            {/* registration form */}
             <ThemeProvider theme={defaultTheme}>
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />
@@ -35,7 +116,7 @@ const RegisterForm = () => {
                         <Typography component="h1" variant="h5">
                             Sign up
                         </Typography>
-                        <Box component="form" noValidate sx={{ mt: 3 }}>
+                        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12} sm={6}>
                                     <TextField
@@ -46,6 +127,8 @@ const RegisterForm = () => {
                                         id="firstName"
                                         label="First Name"
                                         autoFocus
+                                        value={user.firstName}
+                                        onChange={onValueChange}
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
@@ -56,6 +139,8 @@ const RegisterForm = () => {
                                         label="Last Name"
                                         name="lastName"
                                         autoComplete="off"
+                                        value={user.lastName}
+                                        onChange={onValueChange}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -66,6 +151,9 @@ const RegisterForm = () => {
                                         label="Email Address"
                                         name="email"
                                         autoComplete="off"
+                                        value={user.email}
+                                        onChange={onValueChange}
+
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -77,6 +165,8 @@ const RegisterForm = () => {
                                         type="password"
                                         id="password"
                                         autoComplete="off"
+                                        value={user.password}
+                                        onChange={onValueChange}
                                     />
                                 </Grid>
                             </Grid>
@@ -103,7 +193,6 @@ const RegisterForm = () => {
                     </Box>
                 </Container>
             </ThemeProvider>
-
         </>
     )
 }
