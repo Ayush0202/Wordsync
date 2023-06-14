@@ -4,6 +4,12 @@ const jwt = require('jsonwebtoken')
 const validator = require('validator')
 
 
+// creating jwt token
+const createToken = (_id) => {
+    // return jwt.sign({_id}, process.env.SECRET_KEY, {expiredIn: '3d'})
+    return jwt.sign({_id}, process.env.SECRET_KEY)
+}
+
 // registering new user
 const registerUser = async (req, res) => {
 
@@ -53,17 +59,63 @@ const registerUser = async (req, res) => {
         await newUser.save()
 
         // creating token using json web tokens
-        const token = jwt.sign({userId: newUser._id}, `${process.env.SECRET_KEY}`)
+        const token = createToken(newUser._id)
 
         // data saved successfully
-        res.status(201).json({newUser, token})
+        return res.status(201).json({newUser, token})
 
     }
     catch (e) {
 
-        res.status(403).json({message: e.message})
+        return res.status(403).json({message: e.message})
 
     }
 }
 
-module.exports = { registerUser }
+
+// login user
+const loginUser = async (req, res) => {
+
+    const user = req.body
+
+    try {
+
+        // login fields are empty
+        if(!user.email || !user.password) {
+            return res.status(401).json({message: 'All fields must be filled'})
+        }
+
+        // finding user with given email
+        const checkUser = await User.findOne({email: user.email})
+
+        // if user is not present
+        if(!checkUser) {
+            return res.status(401).json({message: 'Invalid email or password'})
+        }
+
+        // user present
+        // compare password
+        const isPasswordValid = await bcrypt.compare(user.password, checkUser.password)
+
+        // passwords do not match
+        if(!isPasswordValid) {
+            return res.status(401).json({message: 'Invalid email or password'})
+        }
+
+        // password is correct
+        // generate jwt token with user Id as payload
+        const token = createToken(checkUser._id)
+
+        // return token to client
+        res.json({checkUser, token})
+
+    }
+    catch (e) {
+        console.log(e)
+        res.status(500).json({message: e.message})
+
+    }
+}
+
+
+module.exports = { registerUser, loginUser }

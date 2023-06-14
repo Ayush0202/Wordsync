@@ -1,6 +1,7 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, {useState} from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
+// material ui
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
@@ -8,11 +9,77 @@ import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
+// api
+import { loginUser }  from '../../services/api'
+
+
+// default values of form
+const defaultValues = {
+    email: '',
+    password: ''
+}
 
 const LoginForm = () => {
+
+    const [user, setUser] = useState('')
+
+    const [errorMessage, setErrorMessage] = useState('')
+
+    // navigate
+    const navigate = useNavigate()
+
+    const onValueChange = (e) => {
+        //console.log(e.target.name, e.target.value);
+        setUser({ ...user, [e.target.name] : e.target.value })
+        //console.log(user)
+    }
+
+    // form submission
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        try {
+            const response = await loginUser(user)
+            console.log(response)
+            setUser(defaultValues)
+            navigate('/docs/dashboard')
+
+        }
+        catch (e) {
+            console.log(e.message)
+
+            // custom validation messages
+            if(e.message === 'All fields must be filled') {
+                setErrorMessage('All fields must be filled')
+            }
+
+            if(e.message === 'Invalid email or password') {
+                setErrorMessage('Invalid email or password')
+            }
+
+        }
+    }
+
+    // closing alert
+    const handleAlertClose = () => {
+        setErrorMessage('')
+    }
+
+
     return (
         <>
+            {/* alert message */}
+            {errorMessage && (
+                <Alert severity="error" onClose={handleAlertClose} >
+                    <AlertTitle>Error</AlertTitle>
+                    {errorMessage}
+                </Alert>
+            )}
+
+            {/* registration form */}
             <Box
                 sx={{
                     marginTop: 8,
@@ -30,7 +97,7 @@ const LoginForm = () => {
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>
-                <Box component="form"  noValidate sx={{ mt: 1 }}>
+                <Box component="form" onSubmit={handleSubmit}  noValidate sx={{ mt: 1 }}>
                     <TextField
                         margin="normal"
                         required
@@ -40,6 +107,8 @@ const LoginForm = () => {
                         name="email"
                         autoComplete="off"
                         autoFocus
+                        value={user.email}
+                        onChange={onValueChange}
                     />
                     <TextField
                         margin="normal"
@@ -50,8 +119,9 @@ const LoginForm = () => {
                         type="password"
                         id="password"
                         autoComplete="off"
+                        value={user.password}
+                        onChange={onValueChange}
                     />
-
                     <Button
                         type="submit"
                         fullWidth

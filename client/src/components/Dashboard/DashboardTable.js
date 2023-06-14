@@ -53,14 +53,13 @@ const DashboardTable = () => {
 
     return (
         <>
-
             <TableContainer>
                 <Container>
                     <TableHead>
                         <THead>
                             <TableCell>Document Link</TableCell>
                             <TableCell>Date</TableCell>
-                            <TableCell>Time</TableCell>
+                            <TableCell>Created</TableCell>
                             <TableCell>Syntax</TableCell>
                             <TableCell>Actions</TableCell>
                         </THead>

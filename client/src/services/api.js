@@ -14,6 +14,19 @@ export const registerUser = async (data) => {
     }
 }
 
+
+// login user
+export const loginUser = async (data) => {
+    try {
+        const response = await axios.post(`${URL}/login`, data)
+        return response.data
+    }
+    catch (e) {
+        throw e.response.data
+    }
+}
+
+
 // getting documents to dashboard
 export const getAllDocuments = async () => {
     try {
