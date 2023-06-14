@@ -58,4 +58,18 @@ const updateDocument = async (docId, data) => {
 }
 
 
-module.exports = { getAllDocuments, getDocument, updateDocument, getSpecificDocument }
+// deleting document
+const deleteDocument = async (req, res) => {
+    try {
+        // deleting document based on doc id
+        await Document.deleteOne({_id: req.params.id})
+        // document delete successfully
+        return res.status(200).json({message: 'Document deleted successfully'})
+    }
+    catch (e) {
+        return res.status(401).json({message: e.message})
+    }
+}
+
+
+module.exports = { getAllDocuments, getDocument, updateDocument, getSpecificDocument, deleteDocument }

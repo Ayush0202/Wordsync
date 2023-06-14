@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react"
 import { Link } from 'react-router-dom'
 
+// material ui
 import { Table, TableHead, TableBody, TableCell, TableRow, styled, Button} from "@mui/material";
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
-import { getAllDocuments} from "../../services/api";
+// api
+import { getAllDocuments, deleteDocument } from "../../services/api";
 
 // styles for table
 
@@ -36,6 +40,9 @@ const DashboardTable = () => {
     // document state
     const [documents, setDocuments] = useState([])
 
+    // showing alert
+    const [errorMessage, setErrorMessage] = useState('')
+
     // getting all documents
     useEffect(() => {
         getAllSavedDocuments()
@@ -51,15 +58,47 @@ const DashboardTable = () => {
         }
     }
 
+    // deleting saved document
+    const deleteSavedDocument = async (id) => {
+        try {
+            const response = await deleteDocument(id)
+            console.log(response)
+            if(response.message === 'Document deleted successfully') {
+                setErrorMessage('Document deleted successfully')
+            }
+            getAllSavedDocuments()
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+
+    // closing alert
+    const handleAlertClose = () => {
+        setErrorMessage('')
+    }
+
     return (
         <>
+            {/* alert message */}
+            {errorMessage && (
+                <Alert severity="success" onClose={handleAlertClose} >
+                    <AlertTitle>Success</AlertTitle>
+                    {errorMessage}
+                </Alert>
+            )}
+
+            <h1 className='dashboard-heading'>Your Documents</h1>
+
+            {/* dashboard */}
+
             <TableContainer>
                 <Container>
                     <TableHead>
                         <THead>
                             <TableCell>Document Link</TableCell>
                             <TableCell>Date</TableCell>
-                            <TableCell>Created</TableCell>
+                            <TableCell>Time</TableCell>
                             <TableCell>Syntax</TableCell>
                             <TableCell>Actions</TableCell>
                         </THead>
@@ -78,7 +117,7 @@ const DashboardTable = () => {
                                     <TableCell>{new Date(document.createdAt).toLocaleTimeString()}</TableCell>
                                     <TableCell>Plain Text</TableCell>
                                     <TableCell>
-                                        <Button variant=''>
+                                        <Button variant='' onClick={() => deleteSavedDocument(document._id)}>
                                             Delete
                                         </Button>
                                     </TableCell>

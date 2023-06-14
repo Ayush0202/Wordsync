@@ -15,7 +15,7 @@ export const registerUser = async (data) => {
 }
 
 
-// login user
+// login existing user
 export const loginUser = async (data) => {
     try {
         const response = await axios.post(`${URL}/login`, data)
@@ -31,6 +31,18 @@ export const loginUser = async (data) => {
 export const getAllDocuments = async () => {
     try {
         const response = await axios.get(`${URL}/docs/dashboard`)
+        return response.data
+    }
+    catch (e) {
+        throw e.response.data
+    }
+}
+
+
+// deleting document
+export const deleteDocument = async (id) => {
+    try {
+        const response = await axios.delete(`${URL}/docs/${id}`)
         return response.data
     }
     catch (e) {
