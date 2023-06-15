@@ -6,6 +6,7 @@ import HomePage from "./components/HomePage/HomePage";
 import Editor from './components/Editor/Editor'
 import Login from "./components/Login/Login";
 import Register from './components/Register/Register'
+import AccountDelete from "./components/AccountDelete/AccountDelete"
 
 import {v4 as uuid} from 'uuid'
 
@@ -26,6 +27,7 @@ function App() {
             <Route path='/docs/dashboard' element={user ? <Dashboard /> : <Navigate to='/login' /> } />
             <Route path='/docs/new' element={user ? <Navigate replace to={`/docs/${uuid()}`} /> : <Navigate to='/login' /> } />
             <Route path='/docs/:id' element={<Editor />  } />
+            <Route path='/delete' element={user ? <AccountDelete /> : <Navigate to='/login' /> } />
         </Routes>
     </BrowserRouter>
   );

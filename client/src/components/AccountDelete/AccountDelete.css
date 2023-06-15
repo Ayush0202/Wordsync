@@ -1,0 +1,47 @@
+.account-delete-container {
+    width: 80%;
+    margin: auto;
+    margin-top: 100px;
+    padding: 50px;
+    text-align: center;
+}
+
+.account-delete-title {
+    font-size: 60px;
+    color: rgb(216, 81, 81);
+    margin-bottom: 20px;
+}
+
+.account-delete-para {
+    font-size: 20px;
+    margin: 50px;
+}
+
+.account-delete-delete-button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    font-size: 16px;
+    background-color: #EC3360;
+    border-radius: 12px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.account-delete-cancel-button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    font-size: 16px;
+    background-color: #2196f3;
+    border-radius: 12px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+
+@media (max-width: 600px) {
+    .account-delete-container {
+        width: 90%;
+    }
+}

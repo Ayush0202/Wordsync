@@ -57,3 +57,20 @@ export const deleteDocument = async (id, token) => {
         throw e.response.data
     }
 }
+
+
+// delete user
+export const deleteUser = async (token) => {
+    try {
+        const response = await axios.delete(`${URL}/delete`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        return response.data
+
+    } catch (error) {
+        throw error.response.data
+    }
+
+}

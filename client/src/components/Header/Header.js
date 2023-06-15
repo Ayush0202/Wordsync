@@ -45,7 +45,7 @@ const Header = () => {
                                 <NavDropdown title={user ? user.checkUser.firstName : 'User Name'} id="basic-nav-dropdown">
                                 <NavDropdown.Item as={Link} to="/docs/new">New Document</NavDropdown.Item>
                                 <NavDropdown.Item as={Link} to="/docs/dashboard">Your Documents</NavDropdown.Item>
-                                <NavDropdown.Item as={Link} to="/docs/dashboard">Delete Account</NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/delete">Delete Account</NavDropdown.Item>
                                 <NavDropdown.Item as={Link} to="/docs/dashboard" onClick={handleClick} >Log Out</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
@@ -56,7 +56,7 @@ const Header = () => {
                         <Nav className="d-flex">
                             <NavDropdown title={user ? user.checkUser.firstName : 'User Name'} id="basic-nav-dropdown">
                                 <NavDropdown.Item as={Link} to="/docs/new">New Document</NavDropdown.Item>
-                                <NavDropdown.Item as={Link} to="/docs/dashboard">Delete Account</NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/delete">Delete Account</NavDropdown.Item>
                                 <NavDropdown.Item as={Link} onClick={handleClick} >Log Out</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
