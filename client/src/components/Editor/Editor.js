@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react'
 import {io} from 'socket.io-client'
 import {useParams, useNavigate } from "react-router-dom";
 
+import {useAuthContext} from "../../hooks/useAuthContext"
+
 import Quill from 'quill'
 import 'quill/dist/quill.snow.css'
 
@@ -43,7 +45,9 @@ const Editor = () => {
     const { id } = useParams()
     const navigate = useNavigate()
     const [authenticated, setAuthenticated] = useState(false)
-
+    const {user} = useAuthContext()
+    // const userId = user.checkUser._id
+    const userId = user?.checkUser?._id
 
     // rendering the editor component
     useEffect(() => {
@@ -149,11 +153,11 @@ const Editor = () => {
             quill && quill.enable()
         })
 
-        socket && socket.emit('get-document', id)
+        socket && socket.emit('get-document', id, userId)
 
 
 
-    }, [quill, socket, id, authenticated])
+    }, [quill, socket, id, authenticated, userId])
 
 
     // saving data after some interval

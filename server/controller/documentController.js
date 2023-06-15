@@ -3,8 +3,9 @@ const Document = require('../models/documentSchema')
 
 // getting all documents of a user and showing them to the dashboard page
 const getAllDocuments = async (req, res) => {
+    const userId = req.user._id
     try {
-        const document = await Document.find({}).sort({ createdAt: -1 })
+        const document = await Document.find({userId: userId}).sort({ createdAt: -1 })
         res.status(200).json(document)
     }
     catch (e) {
@@ -14,7 +15,7 @@ const getAllDocuments = async (req, res) => {
 
 
 // getting a particular document
-const getDocument = async (docId) => {
+const getDocument = async (docId, userId) => {
 
     try {
         if(docId === null) {
@@ -27,7 +28,7 @@ const getDocument = async (docId) => {
             return document
         }
 
-        return await Document.create({_id: docId, data: ""})
+        return await Document.create({_id: docId, data: "", userId: userId})
 
     }
     catch (e) {

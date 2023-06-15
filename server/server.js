@@ -45,9 +45,9 @@ const io = new Server(server, {
 io.on('connection', (socket) => {
 
     // making changes on a particular document only
-    socket.on('get-document', async documentId => {
+    socket.on('get-document', async (documentId, userId) => {
 
-        const document = await documentController.getDocument(documentId)
+        const document = await documentController.getDocument(documentId, userId)
         socket.join(documentId)
         socket.emit('load-document', document.data)
 
