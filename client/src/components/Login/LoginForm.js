@@ -14,6 +14,7 @@ import AlertTitle from '@mui/material/AlertTitle';
 
 // api
 import { loginUser }  from '../../services/api'
+import { useAuthContext } from "../../hooks/useAuthContext"
 
 
 // default values of form
@@ -27,6 +28,8 @@ const LoginForm = () => {
     const [user, setUser] = useState('')
 
     const [errorMessage, setErrorMessage] = useState('')
+
+    const { dispatch } = useAuthContext()
 
     // navigate
     const navigate = useNavigate()
@@ -44,6 +47,13 @@ const LoginForm = () => {
         try {
             const response = await loginUser(user)
             console.log(response)
+
+            // save data to local storage
+            localStorage.setItem('user', JSON.stringify(response))
+
+            // update the auth context
+            dispatch({type: 'LOGIN', payload: response})
+
             setUser(defaultValues)
             navigate('/docs/dashboard')
 

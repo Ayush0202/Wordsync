@@ -13,22 +13,6 @@ const getAllDocuments = async (req, res) => {
 }
 
 
-const getSpecificDocument = async (req, res) => {
-    try {
-        const docId = req.params.docId;
-        const document = await getDocument(docId);
-
-        if (document) {
-            res.status(200).json(document);
-        } else {
-            res.status(404).json({ message: 'Document not found' });
-        }
-    } catch (e) {
-        res.status(500).json({ message: e.message });
-    }
-}
-
-
 // getting a particular document
 const getDocument = async (docId) => {
 
@@ -72,4 +56,4 @@ const deleteDocument = async (req, res) => {
 }
 
 
-module.exports = { getAllDocuments, getDocument, updateDocument, getSpecificDocument, deleteDocument }
+module.exports = { getAllDocuments, getDocument, updateDocument, deleteDocument }

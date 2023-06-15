@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 // api
 import {registerUser} from '../../services/api'
+import { useAuthContext } from "../../hooks/useAuthContext"
 
 // material ui
 import Avatar from '@mui/material/Avatar'
@@ -38,6 +39,8 @@ const RegisterForm = () => {
     // adding data to form
     const [user, setUser] = useState(defaultValues)
 
+    const { dispatch } = useAuthContext()
+
     // setting error messages
     const [errorMessage, setErrorMessage] = useState('')
 
@@ -57,7 +60,7 @@ const RegisterForm = () => {
             const response = await registerUser(user)
             console.log(response)
             setUser(defaultValues)
-            navigate('/docs/dashboard')
+            navigate('/login')
         }
         catch (e) {
             console.log(e.message)

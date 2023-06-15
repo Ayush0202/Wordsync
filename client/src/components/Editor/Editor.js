@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {io} from 'socket.io-client'
-import {useParams} from "react-router-dom";
+import {useParams, useNavigate } from "react-router-dom";
 
 import Quill from 'quill'
 import 'quill/dist/quill.snow.css'
@@ -41,23 +41,41 @@ const Editor = () => {
     const [socket, setSocket] = useState()
     const [quill, setQuill] = useState()
     const { id } = useParams()
+    const navigate = useNavigate()
+    const [authenticated, setAuthenticated] = useState(false)
 
 
     // rendering the editor component
     useEffect(() => {
-        const quillServer = new Quill('#editor', {
-            theme: 'snow',
-            modules: {toolbar: toolbarOptions}
-        })
-        // document is disabled till the time it is loaded
-        quillServer.disable()
-        quillServer.setText('Loading the document...')
-        setQuill((quillServer))
+
+        const user = localStorage.getItem('user')
+
+        if(!user) {
+            setAuthenticated(false)
+            navigate('/login')
+        }
+        else {
+            setAuthenticated(true)
+            const quillServer = new Quill('#editor', {
+                theme: 'snow',
+                modules: {toolbar: toolbarOptions}
+            })
+            // document is disabled till the time it is loaded
+            quillServer.disable()
+            quillServer.setText('Loading the document...')
+            setQuill((quillServer))
+        }
+
     }, [])
 
 
     // making connections
     useEffect(() => {
+
+        if(!authenticated) {
+            return
+        }
+
         const socketServer = io('http://localhost:5000')
         setSocket(socketServer)
 
@@ -65,11 +83,15 @@ const Editor = () => {
             socketServer.disconnect()
         }
 
-    }, [])
+    }, [authenticated])
 
 
     // handling changes in the editor
     useEffect(() => {
+
+        if(!authenticated) {
+            return
+        }
 
         if(socket === null || quill === null)   return
 
@@ -85,11 +107,15 @@ const Editor = () => {
             quill && quill.off('text-change', handleChange)
         }
 
-    }, [quill, socket])
+    }, [quill, socket, authenticated])
 
 
     // broadcasting changes to all users
     useEffect(() => {
+
+        if(!authenticated) {
+            return
+        }
 
         if(socket === null || quill === null)   return
 
@@ -105,11 +131,16 @@ const Editor = () => {
             socket && socket.off('receive-changes', handleChange)
         }
 
-    }, [quill, socket])
+    }, [quill, socket, authenticated])
 
 
     // handling changes in a specific document
     useEffect(() => {
+
+        if(!authenticated) {
+            return
+        }
+
         if(quill === null || socket === null)   return
 
         // enabling document when it is available
@@ -122,11 +153,15 @@ const Editor = () => {
 
 
 
-    }, [quill, socket, id])
+    }, [quill, socket, id, authenticated])
 
 
     // saving data after some interval
     useEffect(() => {
+
+        if(!authenticated) {
+            return
+        }
 
         if(socket === null || quill === null)   return
 
@@ -138,7 +173,7 @@ const Editor = () => {
             clearInterval(interval)
         }
 
-    }, [socket, quill])
+    }, [socket, quill, authenticated])
 
 
 

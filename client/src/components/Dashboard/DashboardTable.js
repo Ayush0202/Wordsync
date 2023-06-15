@@ -7,7 +7,8 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 
 // api
-import { getAllDocuments, deleteDocument } from "../../services/api";
+import { getAllDocuments, deleteDocument } from "../../services/api"
+import {useAuthContext} from "../../hooks/useAuthContext"
 
 // styles for table
 
@@ -37,6 +38,8 @@ const TBody = styled(TableRow)`
 
 const DashboardTable = () => {
 
+    const {user} = useAuthContext()
+
     // document state
     const [documents, setDocuments] = useState([])
 
@@ -45,12 +48,14 @@ const DashboardTable = () => {
 
     // getting all documents
     useEffect(() => {
-        getAllSavedDocuments()
-    }, [])
+        if(user) {
+            getAllSavedDocuments(user.token)
+        }
+    }, [user])
 
-    const getAllSavedDocuments = async () => {
+    const getAllSavedDocuments = async (token) => {
         try {
-            const response = await getAllDocuments()
+            const response = await getAllDocuments(token)
             setDocuments(response)
         }
         catch (e) {
@@ -61,12 +66,13 @@ const DashboardTable = () => {
     // deleting saved document
     const deleteSavedDocument = async (id) => {
         try {
-            const response = await deleteDocument(id)
+            const authToken = user.token
+            const response = await deleteDocument(id, authToken)
             console.log(response)
             if(response.message === 'Document deleted successfully') {
                 setErrorMessage('Document deleted successfully')
             }
-            getAllSavedDocuments()
+            getAllSavedDocuments(authToken)
         }
         catch (e) {
             console.log(e)

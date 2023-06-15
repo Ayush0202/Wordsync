@@ -28,9 +28,13 @@ export const loginUser = async (data) => {
 
 
 // getting documents to dashboard
-export const getAllDocuments = async () => {
+export const getAllDocuments = async (token) => {
     try {
-        const response = await axios.get(`${URL}/docs/dashboard`)
+        const response = await axios.get(`${URL}/docs/dashboard`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
         return response.data
     }
     catch (e) {
@@ -40,9 +44,13 @@ export const getAllDocuments = async () => {
 
 
 // deleting document
-export const deleteDocument = async (id) => {
+export const deleteDocument = async (id, token) => {
     try {
-        const response = await axios.delete(`${URL}/docs/${id}`)
+        const response = await axios.delete(`${URL}/docs/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
         return response.data
     }
     catch (e) {
