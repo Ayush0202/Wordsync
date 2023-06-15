@@ -1,7 +1,6 @@
 import axios from 'axios'
 
-const URL = 'http://localhost:5000'
-
+const URL = process.env.REACT_APP_SERVER_URL
 
 // register new user
 export const registerUser = async (data) => {

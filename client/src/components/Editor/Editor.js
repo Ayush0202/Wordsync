@@ -80,7 +80,7 @@ const Editor = () => {
             return
         }
 
-        const socketServer = io('http://localhost:5000')
+        const socketServer = io(process.env.REACT_APP_SERVER_URL)
         setSocket(socketServer)
 
         return () => {
