@@ -13,6 +13,7 @@ Project can be viewed [here](https://wordsync-one.vercel.app/) and Demo can be v
 - **Dashboard** : Users have access to a personalized dashboard that displays their documents and allows quick navigation
 - **Protected Routes** : Only authenticated users are allowed to access application features
 - **Delete Account** : Users can delete their account along with all of their documents
+- **Responsive Design** : Responsive design for Laptop, Tablet and Mobile Phones
 
 ## Installation ##
 
