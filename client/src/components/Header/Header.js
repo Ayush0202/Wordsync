@@ -1,4 +1,6 @@
 import React from "react"
+
+// bootstrap
 import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
@@ -6,9 +8,31 @@ import NavDropdown from 'react-bootstrap/NavDropdown'
 import {Link, useLocation} from "react-router-dom"
 import './Header.css'
 
+// mui
+import IconButton from '@mui/material/IconButton';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+
 import {useAuthContext} from "../../hooks/useAuthContext"
 
 const Header = () => {
+
+    // material ui
+    const [auth, setAuth] = React.useState(true);
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const handleChange = (event) => {
+        setAuth(event.target.checked);
+    };
+
+    const handleMenu = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     const {user} = useAuthContext()
 
@@ -16,6 +40,7 @@ const Header = () => {
 
     const location = useLocation()
 
+    // logout function
     const handleClick = () => {
         // remove user from storage
         localStorage.removeItem('user')
@@ -31,6 +56,7 @@ const Header = () => {
 
                     <Navbar.Brand className='navbar-heading-name' as={Link} to="/">Wordsync</Navbar.Brand>
 
+
                     {/* navbar of home page when user is not logged in */}
                     {location.pathname === '/' && !user && (
                         <Nav className="d-flex navbar-button">
@@ -39,27 +65,83 @@ const Header = () => {
                         </Nav>
                     )}
 
+                    
                     {/* navbar of home page when user is logged in */}
                     {location.pathname === '/' && user && (
-                        <Nav className="d-flex">
-                                <NavDropdown title={user ? user.checkUser.firstName : 'User Name'} id="basic-nav-dropdown">
-                                <NavDropdown.Item as={Link} to="/docs/new">New Document</NavDropdown.Item>
-                                <NavDropdown.Item as={Link} to="/docs/dashboard">Your Documents</NavDropdown.Item>
-                                <NavDropdown.Item as={Link} to="/delete">Delete Account</NavDropdown.Item>
-                                <NavDropdown.Item as={Link} to="/docs/dashboard" onClick={handleClick} >Log Out</NavDropdown.Item>
-                            </NavDropdown>
-                        </Nav>
+                        <div>
+                            <IconButton
+                                size="large"
+                                aria-label="account of current user"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                onClick={handleMenu}
+                                color="inherit"
+                                style={{ color: 'white' }}
+                            >
+                                <AccountCircle />
+                            </IconButton>
+                            <Menu
+                                id="menu-appbar"
+                                anchorEl={anchorEl}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={Boolean(anchorEl)}
+                                onClose={handleClose}
+                            >
+                                <MenuItem onClick={handleClose}>{user ? user.checkUser.firstName : 'User Name'}</MenuItem>
+                                <MenuItem as={Link} to="/docs/new" style={{ color: 'black' }} onClick={handleClose}>New Document</MenuItem>
+                                <MenuItem as={Link} to="/docs/dashboard" style={{ color: 'black' }} onClick={handleClose}>Your Documents</MenuItem>
+                                <MenuItem as={Link} to="/delete" style={{ color: 'black' }} onClick={handleClose}>Delete Account</MenuItem>
+                                <MenuItem as={Link} style={{ color: 'black' }} onClick={handleClick}>Logout</MenuItem>
+
+                            </Menu>
+                        </div>
                     )}
 
+
                     {/* navbar of dashboard page */}
-                    {location.pathname === '/docs/dashboard' && (
-                        <Nav className="d-flex">
-                            <NavDropdown title={user ? user.checkUser.firstName : 'User Name'} id="basic-nav-dropdown">
-                                <NavDropdown.Item as={Link} to="/docs/new">New Document</NavDropdown.Item>
-                                <NavDropdown.Item as={Link} to="/delete">Delete Account</NavDropdown.Item>
-                                <NavDropdown.Item as={Link} onClick={handleClick} >Log Out</NavDropdown.Item>
-                            </NavDropdown>
-                        </Nav>
+                    {location.pathname === '/docs/dashboard' && user && (
+                        <div>
+                            <IconButton
+                                size="large"
+                                aria-label="account of current user"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                onClick={handleMenu}
+                                color="inherit"
+                                style={{ color: 'white' }}
+                            >
+                                <AccountCircle />
+                            </IconButton>
+                            <Menu
+                                id="menu-appbar"
+                                anchorEl={anchorEl}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={Boolean(anchorEl)}
+                                onClose={handleClose}
+                            >
+                                <MenuItem onClick={handleClose}>{user ? user.checkUser.firstName : 'User Name'}</MenuItem>
+                                <MenuItem as={Link} to="/docs/new" style={{ color: 'black' }} onClick={handleClose}>New Document</MenuItem>
+                                <MenuItem as={Link} to="/delete" style={{ color: 'black' }} onClick={handleClose}>Delete Account</MenuItem>
+                                <MenuItem as={Link} style={{ color: 'black' }} onClick={handleClick}>Logout</MenuItem>
+
+                            </Menu>
+                        </div>
                     )}
 
                 </Container>
