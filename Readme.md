@@ -3,7 +3,7 @@
 
 Wordsync is a real-time document collaboration platform built using MERN `(MongoDB, Express.js, React.js, Node.js)` stack. It allows multiple users to collaborate on the same document simultaneously, providing a seamless and efficient collaborative writing experience. With wordsync, users can create, edit, and share documents in real-time, fostering collaboration and enhancing productivity
 
-Project can be viewed [here](https://github.com/Ayush0202/Wordsync) and Demo can be viewed [here](https://github.com/Ayush0202/Wordsync)
+Project can be viewed [here](https://wordsync-one.vercel.app/) and Demo can be viewed [here](https://github.com/Ayush0202/Wordsync)
 
 ## Features ##
 

@@ -17,10 +17,7 @@ const authRoute = require('./routes/authRoute')
 
 app.use(bodyParser.json({extended: true}))
 app.use(bodyParser.urlencoded({extended: true}))
-app.use(cors({
-    origin: 'https://wordsync-one.vercel.app',
-    optionsSuccessStatus: 200 
-}));
+app.use(cors())
 
 // connecting database
 mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.cx5ccid.mongodb.net/${process.env.DB_NAME}`, {
