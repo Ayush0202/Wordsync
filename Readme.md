@@ -1,7 +1,9 @@
 # WordSync #
 
 
-Wordsync is a real-time document collaboration platform built using MERN `(MongoDB, Express.js, React.js, Node.js)` stack. It allows multiple users to collaborate on the same document simultaneously, providing a seamless and efficient collaborative writing experience. With wordsync, users can create, edit, and share documents in real-time, fostering collaboration and enhancing productivity 
+Wordsync is a real-time document collaboration platform built using MERN `(MongoDB, Express.js, React.js, Node.js)` stack. It allows multiple users to collaborate on the same document simultaneously, providing a seamless and efficient collaborative writing experience. With wordsync, users can create, edit, and share documents in real-time, fostering collaboration and enhancing productivity
+
+Project can be viewed [here](https://github.com/Ayush0202/Wordsync) and Demo can be viewed [here](https://github.com/Ayush0202/Wordsync)
 
 ## Features ##
 
@@ -92,6 +94,8 @@ Make sure to start both client and server to fully utilize the Wordsync applicat
 - Socket.IO: A library that enables real-time, bidirectional communication between the server and the clients.
 - JSON Web Tokens (JWT): A standard for securely transmitting information between parties as a JSON object.
 - Bcrypt -  Library for hashing passwords.
+- Material UI - A library of React UI components 
+- Quill.js - A modern rich text editor
 
 
 
